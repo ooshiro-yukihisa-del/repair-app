@@ -7,18 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .overdue-card {
-            border: 2px solid #ef4444 !important;
-            background-color: #fef2f2 !important;
-        }
-        .voice-active {
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .overdue-card { border: 2px solid #ef4444 !important; background-color: #fef2f2 !important; }
+        .voice-active { animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 pb-12">
@@ -27,9 +18,7 @@
     <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 p-2 rounded-lg">
-                    <i class="fa-solid fa-wrench text-xl"></i>
-                </div>
+                <div class="bg-blue-600 p-2 rounded-lg"><i class="fa-solid fa-wrench text-xl"></i></div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight">修理サポート NAVI</h1>
                     <p class="text-xs text-slate-400">受付・進捗・履歴統合管理</p>
@@ -82,8 +71,6 @@
             </div>
 
             <form id="repairForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                
-                <!-- 受付日 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">受付日 <span class="text-red-500">*</span></label>
                     <div class="relative">
@@ -92,7 +79,6 @@
                     </div>
                 </div>
 
-                <!-- お客様名（企業名） -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">お客様名（企業名） <span class="text-red-500">*</span></label>
                     <div class="relative">
@@ -101,7 +87,6 @@
                     </div>
                 </div>
 
-                <!-- 個人名 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">担当者名（個人名）</label>
                     <div class="relative">
@@ -110,7 +95,6 @@
                     </div>
                 </div>
 
-                <!-- 電話番号 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">電話番号</label>
                     <div class="relative">
@@ -119,7 +103,6 @@
                     </div>
                 </div>
 
-                <!-- 機械名 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">機械名 <span class="text-red-500">*</span></label>
                     <div class="relative">
@@ -128,7 +111,6 @@
                     </div>
                 </div>
 
-                <!-- 作業担当 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">作業担当者</label>
                     <div class="relative">
@@ -137,7 +119,6 @@
                     </div>
                 </div>
 
-                <!-- 作業予定日 -->
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">作業予定日 <span class="text-red-500">*</span></label>
                     <div class="relative">
@@ -146,7 +127,6 @@
                     </div>
                 </div>
 
-                <!-- 作業内容 -->
                 <div class="md:col-span-2 lg:col-span-4">
                     <label class="block text-xs font-bold text-slate-600 mb-1">作業内容</label>
                     <div class="relative">
@@ -155,7 +135,6 @@
                     </div>
                 </div>
 
-                <!-- 備考 -->
                 <div class="md:col-span-2 lg:col-span-4">
                     <label class="block text-xs font-bold text-slate-600 mb-1">備考</label>
                     <div class="relative">
@@ -172,15 +151,13 @@
             </form>
         </section>
 
-        <!-- カード一覧エリア -->
+        <!-- 一覧表示 -->
         <section>
             <div class="flex justify-between items-center mb-4">
                 <h3 id="sectionTitle" class="font-bold text-slate-700 text-base">進行中の修理案件一覧</h3>
                 <input type="text" id="searchInput" oninput="renderCards()" placeholder="キーワードで検索..." class="p-2 border border-slate-300 rounded-lg text-xs w-48 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
             </div>
-
             <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-
             <div id="emptyMessage" class="hidden text-center py-12 bg-white rounded-xl border border-slate-200">
                 <i class="fa-solid fa-inbox text-4xl text-slate-300 mb-2"></i>
                 <p class="text-slate-500 text-sm">表示する案件データはありません</p>
@@ -190,7 +167,7 @@
     </main>
 
     <script>
-        const GAS_URL = 'https://script.google.com/macros/s/AKfycbz4JtsDV1WcOsvRIk1PVWPDsa8v9h_iT8GP8GbrSYbo0ofmoaz9AdtxNH0ELVB5l8Q9bg/exec';
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxZ4ZUq7M1adedXh0yX3J8kO1W8doEzaSx4lLcUujAQksCpkDTM2D49QJtSDzCpFlKOaQ/exec';
 
         let repairsData = JSON.parse(localStorage.getItem('repairsData') || '[]');
         let customerMaster = JSON.parse(localStorage.getItem('customerMaster') || '[]');
@@ -200,12 +177,10 @@
         let recognition = null;
         let audioCtx = null;
 
-        // 効果音（何度も安定して鳴るようにAudioContext管理を修正）
         function playBeep(freq = 880, duration = 0.12) {
             try {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
@@ -229,7 +204,6 @@
             const cleanStr = inputStr.replace(/年|月/g, '/').replace(/日/g, '').trim();
             const parts = cleanStr.split(/[\/\-.]/);
             const currentYear = 2026;
-
             if (parts.length === 2) {
                 return `${currentYear}年${parts[0].padStart(2, '0')}月${parts[1].padStart(2, '0')}日`;
             } else if (parts.length === 3) {
@@ -248,14 +222,18 @@
 
         function autoFormatPhone(element) {
             if (!element || !element.value) return;
-            // 電話番号から不要な文字を除去して数字とハイフンのみに整形
-            let raw = element.value.replace(/[^0-9]/g, '');
+            // 日本語の漢数字や文字が混ざった場合に半角数字のみを抽出
+            let raw = element.value.replace(/[ー−―-]/g, '').replace(/[^0-9]/g, '');
             if (raw.length === 10 || raw.length === 11) {
                 if (raw.startsWith('090') || raw.startsWith('080') || raw.startsWith('070')) {
                     element.value = raw.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
                 } else if (raw.startsWith('098')) {
                     element.value = raw.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                } else {
+                    element.value = raw.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
                 }
+            } else if (raw.length > 0) {
+                element.value = raw;
             }
         }
 
@@ -291,7 +269,7 @@
                     }
                 }
             } catch (err) {
-                console.log("GAS通信スキップ (キャッシュ参照中)");
+                console.log("GAS通信スキップ");
             } finally {
                 if (refreshBtn) refreshBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> 最新同期';
                 renderCards();
@@ -300,18 +278,20 @@
 
         function katakanaToHiragana(src) {
             return src.replace(/[\u30a1-\u30f6]/g, function(match) {
-                var chr = match.charCodeAt(0) - 0x60;
-                return String.fromCharCode(chr);
+                return String.fromCharCode(match.charCodeAt(0) - 0x60);
             });
         }
 
-        // --- マスタ＆学習済みデータ照合エンジン ---
         function convertWithMaster(text, fieldId) {
             if (!text) return '';
             let cleaned = text.trim();
             let hiraClean = katakanaToHiragana(cleaned).toLowerCase();
 
-            // 1. 顧客名マスタ照合
+            // 電話番号は数字変換優先
+            if (fieldId === 'contactPhone') {
+                return cleaned.replace(/[^0-9]/g, '');
+            }
+
             if (fieldId === 'customer') {
                 for (let c of customerMaster) {
                     let cName = c.name;
@@ -321,7 +301,6 @@
                 }
             }
 
-            // 2. 名字マスタ照合
             if (fieldId === 'contactName' || fieldId === 'staff') {
                 for (let s of surnameMaster) {
                     let sName = s.name;
@@ -331,24 +310,19 @@
                 }
             }
 
-            // 3. 過去蓄積データからの自動補正（機械名、作業内容、備考など）
             let learnTargets = [];
             if (fieldId === 'machine') learnTargets = learnedData.machines || [];
             if (fieldId === 'details') learnTargets = learnedData.details || [];
             if (fieldId === 'notes') learnTargets = learnedData.notes || [];
 
             for (let item of learnTargets) {
-                if (item && (item.includes(cleaned) || cleaned.includes(item))) {
-                    return item;
-                }
+                if (item && (item.includes(cleaned) || cleaned.includes(item))) return item;
             }
-
             return cleaned;
         }
 
         async function handleFormSubmit(e) {
             e.preventDefault();
-
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 送信中...';
@@ -370,7 +344,6 @@
             repairsData.unshift(newRecord);
             localStorage.setItem('repairsData', JSON.stringify(repairsData));
 
-            // ローカル学習データへの即時追加
             if (newRecord.machine && !learnedData.machines.includes(newRecord.machine)) learnedData.machines.push(newRecord.machine);
             if (newRecord.details && !learnedData.details.includes(newRecord.details)) learnedData.details.push(newRecord.details);
             if (newRecord.notes && !learnedData.notes.includes(newRecord.notes)) learnedData.notes.push(newRecord.notes);
@@ -382,15 +355,12 @@
                     headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify({ action: 'add', item: newRecord })
                 });
-            } catch (err) {
-                console.error("GAS書き込みエラー:", err);
-            }
+            } catch (err) { console.error("GAS書き込みエラー:", err); }
 
             document.getElementById('repairForm').reset();
             initDefaultDate();
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> 登録する (スプレッドシートへ保存)';
-
             renderCards();
             alert("受付データを登録しました！");
         }
@@ -407,14 +377,9 @@
                     await fetch(GAS_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify({
-                            action: 'updateStatus',
-                            item: { id: id, status: newStatus }
-                        })
+                        body: JSON.stringify({ action: 'updateStatus', item: { id: id, status: newStatus } })
                     });
-                } catch (err) {
-                    console.error("GASステータス更新エラー:", err);
-                }
+                } catch (err) { console.error("GASステータス更新エラー:", err); }
             }
         }
 
@@ -432,7 +397,6 @@
             const container = document.getElementById('cardsContainer');
             const emptyMessage = document.getElementById('emptyMessage');
             const searchKeyword = document.getElementById('searchInput').value.toLowerCase();
-
             container.innerHTML = '';
 
             const filtered = repairsData.filter(item => {
@@ -457,51 +421,26 @@
                 const overdue = isOverdue(item.scheduleDate, item.status);
                 const card = document.createElement('div');
                 card.className = `bg-white rounded-xl shadow-sm border border-slate-200 p-5 relative flex flex-col justify-between transition hover:shadow-md ${overdue ? 'overdue-card' : ''}`;
-
                 card.innerHTML = `
                     <div>
-                        ${overdue ? `
-                            <div class="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-flex items-center gap-1 shadow-sm">
-                                <i class="fa-solid fa-triangle-exclamation"></i> 作業予定日を超過しています
-                            </div>
-                        ` : ''}
-
+                        ${overdue ? `<div class="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-flex items-center gap-1 shadow-sm"><i class="fa-solid fa-triangle-exclamation"></i> 作業予定日を超過しています</div>` : ''}
                         <div class="flex justify-between items-start mb-2">
                             <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">${item.id}</span>
                             <span class="text-xs text-slate-500"><i class="fa-regular fa-calendar"></i> 受付: ${item.date}</span>
                         </div>
-
                         <h4 class="font-bold text-slate-800 text-base mb-1">${item.customer}</h4>
-                        
-                        ${(item.contactName || item.contactPhone) ? `
-                            <p class="text-xs text-slate-500 mb-3 flex items-center gap-2">
-                                <i class="fa-solid fa-user text-slate-400"></i> ${item.contactName || '担当未記入'} 
-                                ${item.contactPhone ? `(${item.contactPhone})` : ''}
-                            </p>
-                        ` : ''}
-
+                        ${(item.contactName || item.contactPhone) ? `<p class="text-xs text-slate-500 mb-3 flex items-center gap-2"><i class="fa-solid fa-user text-slate-400"></i> ${item.contactName || '担当未記入'} ${item.contactPhone ? `(${item.contactPhone})` : ''}</p>` : ''}
                         <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 space-y-1 text-xs">
                             <p><strong class="text-slate-600">機械名:</strong> <span class="font-bold text-slate-800">${item.machine}</span></p>
                             <p><strong class="text-slate-600">作業担当:</strong> ${item.staff || '未定'}</p>
                             <p><strong class="text-slate-600">予定日:</strong> <span class="${overdue ? 'text-red-600 font-bold' : 'text-slate-700'}">${item.scheduleDate}</span></p>
                         </div>
-
-                        ${item.details ? `
-                            <div class="text-xs mb-3">
-                                <span class="text-slate-500 font-bold block">作業内容:</span>
-                                <p class="text-slate-700 bg-blue-50/50 p-2 rounded border border-blue-100 mt-1">${item.details}</p>
-                            </div>
-                        ` : ''}
-
-                        ${item.notes ? `
-                            <p class="text-xs text-slate-400 mb-3 italic">備考: ${item.notes}</p>
-                        ` : ''}
+                        ${item.details ? `<div class="text-xs mb-3"><span class="text-slate-500 font-bold block">作業内容:</span><p class="text-slate-700 bg-blue-50/50 p-2 rounded border border-blue-100 mt-1">${item.details}</p></div>` : ''}
+                        ${item.notes ? `<p class="text-xs text-slate-400 mb-3 italic">備考: ${item.notes}</p>` : ''}
                     </div>
-
                     <div class="pt-3 border-t border-slate-100 flex justify-end">
                         <button onclick="toggleComplete('${item.id}')" class="${item.status === '完了' ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-green-600 text-white hover:bg-green-700'} text-xs font-bold px-4 py-2 rounded-lg transition flex items-center gap-1.5 shadow-sm">
-                            <i class="fa-solid ${item.status === '完了' ? 'fa-rotate-left' : 'fa-check'}"></i>
-                            ${item.status === '完了' ? '進行中に戻す' : '作業完了'}
+                            <i class="fa-solid ${item.status === '完了' ? 'fa-rotate-left' : 'fa-check'}"></i> ${item.status === '完了' ? '進行中に戻す' : '作業完了'}
                         </button>
                     </div>
                 `;
@@ -514,7 +453,6 @@
             const activeBtn = document.getElementById('tabActiveBtn');
             const completedBtn = document.getElementById('tabCompletedBtn');
             const title = document.getElementById('sectionTitle');
-
             if (tab === 'active') {
                 activeBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-blue-600 text-blue-600 bg-blue-50/50 flex items-center justify-center gap-2";
                 completedBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center justify-center gap-2";
@@ -527,17 +465,13 @@
             renderCards();
         }
 
-        // --- 超拡張版・長時間聞き取り音声認識エンジン ---
         function initSpeech() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert("Google Chromeをご利用ください。");
-                return null;
-            }
+            if (!SpeechRecognition) return null;
             const rec = new SpeechRecognition();
             rec.lang = 'ja-JP';
             rec.interimResults = true;
-            rec.continuous = true; // 連続聞き取りモード（途中で切れにくい）
+            rec.continuous = true;
             rec.maxAlternatives = 1;
             return rec;
         }
@@ -550,15 +484,14 @@
             const alertBox = document.getElementById('voiceAlert');
             const statusText = document.getElementById('voiceStatusText');
             const subText = document.getElementById('voiceSubText');
-            
             alertBox.classList.remove('hidden');
             statusText.innerText = `準備中...`;
             subText.innerText = "「ピッ」と鳴ったらゆっくりお話しください";
 
             recognition.onstart = () => {
-                playBeep(880, 0.12); // 開始音
-                statusText.innerText = `聞き取り中... (${fieldId})`;
-                subText.innerText = "話し終わったら右上の「停止」を押すか、少し長めにお待ちください";
+                playBeep(880, 0.12);
+                statusText.innerText = `聞き取り中...`;
+                subText.innerText = "話し終わったら「停止」を押すか、少しそのままお待ちください";
             };
 
             recognition.onresult = (event) => {
@@ -566,12 +499,10 @@
                 for (let i = event.resultIndex; i < event.results.length; ++i) {
                     transcript += event.results[i][0].transcript;
                 }
-                
                 const field = document.getElementById(fieldId);
-                if (field && transcript) {
+                if (field && transcript.trim()) {
                     let converted = convertWithMaster(transcript, fieldId);
                     field.value = converted;
-
                     if (fieldId === 'date' || fieldId === 'scheduleDate') autoFormatDate(field);
                     if (fieldId === 'contactPhone') autoFormatPhone(field);
                 }
@@ -579,10 +510,9 @@
 
             recognition.onerror = stopSpeechRecognition;
             recognition.onend = () => {
-                playBeep(440, 0.1); // 終了音
+                playBeep(440, 0.1);
                 stopSpeechRecognition();
             };
-
             recognition.start();
         }
 
@@ -594,7 +524,6 @@
             const alertBox = document.getElementById('voiceAlert');
             const statusText = document.getElementById('voiceStatusText');
             const subText = document.getElementById('voiceSubText');
-
             alertBox.classList.remove('hidden');
             statusText.innerText = "一括音声入力 準備中...";
             subText.innerText = "「ピッ」と鳴ったら「お客様名 ○○ 担当者 比嘉」のように連続でお話しください";
@@ -617,7 +546,6 @@
                 playBeep(440, 0.1);
                 stopSpeechRecognition();
             };
-
             recognition.start();
         }
 
