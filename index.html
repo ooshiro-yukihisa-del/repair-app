@@ -170,10 +170,4 @@
 
         let repairsData = JSON.parse(localStorage.getItem('repairsData') || '[]');
         let customerMaster = JSON.parse(localStorage.getItem('customerMaster') || '[]');
-        let surnameMaster = JSON.parse(localStorage.getItem('surnameMaster') || '[]');
-        let learnedData = JSON.parse(localStorage.getItem('learnedData') || '{"machines":[],"details":[],"notes":[],"staff":[]}');
-        let currentTab = 'active';
-        let recognition = null;
-        let audioCtx = null;
-
-        function playBeep(freq = 880, duration =
+        let surnameMaster = JSON.parse(localStorage.getItem('surnameMaster') ||
