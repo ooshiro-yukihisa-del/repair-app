@@ -14,158 +14,185 @@
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 pb-12">
 
-    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 p-2 rounded-lg"><i class="fa-solid fa-wrench text-xl"></i></div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">修理サポート NAVI</h1>
-                    <p class="text-xs text-slate-400">受付・進捗・履歴統合管理</p>
+    <!-- パスワード認証モーダル -->
+    <div id="authModal" class="fixed inset-0 bg-slate-900/90 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm text-center border border-slate-200">
+            <div class="bg-blue-100 text-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="font-bold text-lg text-slate-800 mb-1">修理サポート NAVI</h2>
+            <p class="text-xs text-slate-500 mb-6">利用するにはアクセスパスワードを入力してください</p>
+            
+            <form onsubmit="checkPassword(event)">
+                <input type="password" id="passwordInput" placeholder="パスワードを入力" required class="w-full p-3 bg-slate-50 border border-slate-300 rounded-lg text-center font-mono text-lg mb-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                <p id="authError" class="text-xs text-red-500 mb-3 hidden font-bold">パスワードが正しくありません</p>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition">
+                    認証してログイン
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- アプリメインコンテンツ（認証後に表示） -->
+    <div id="appContent" class="hidden">
+        <header class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg"><i class="fa-solid fa-wrench text-xl"></i></div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-tight">修理サポート NAVI</h1>
+                        <p class="text-xs text-slate-400">受付・進捗・履歴統合管理</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="refreshBtn" onclick="loadFromGAS()" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg flex items-center gap-1 border border-slate-700">
+                        <i class="fa-solid fa-rotate"></i> 最新同期
+                    </button>
+                    <button onclick="logout()" class="bg-slate-800 hover:bg-red-900 text-xs px-3 py-2 rounded-lg text-slate-300 hover:text-white border border-slate-700 transition">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
-                <button id="refreshBtn" onclick="loadFromGAS()" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-lg flex items-center gap-1 border border-slate-700">
-                    <i class="fa-solid fa-rotate"></i> 最新同期
+        </header>
+
+        <main class="max-w-6xl mx-auto px-4 mt-6">
+
+            <div id="voiceAlert" class="hidden mb-4 p-3 bg-red-600 text-white rounded-xl shadow-lg flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-microphone text-2xl voice-active text-yellow-300"></i>
+                    <div>
+                        <span id="voiceStatusText" class="font-bold text-sm block">マイク準備中...</span>
+                        <span id="voiceSubText" class="text-xs text-red-100">「ピッ」と鳴ったらゆっくりお話しください</span>
+                    </div>
+                </div>
+                <button onclick="stopSpeechRecognition()" class="bg-white text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-50 transition">停止</button>
+            </div>
+
+            <div class="flex border-b border-slate-300 mb-6 bg-white rounded-t-xl overflow-hidden shadow-sm">
+                <button id="tabActiveBtn" onclick="switchTab('active')" class="flex-1 py-3 font-bold text-center border-b-2 border-blue-600 text-blue-600 bg-blue-50/50 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> 進行中案件
+                    <span id="activeCount" class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+                </button>
+                <button id="tabCompletedBtn" onclick="switchTab('completed')" class="flex-1 py-3 font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-box-archive"></i> 作業完了フォルダ
+                    <span id="completedCount" class="bg-slate-400 text-white text-xs px-2 py-0.5 rounded-full">0</span>
                 </button>
             </div>
-        </div>
-    </header>
 
-    <main class="max-w-6xl mx-auto px-4 mt-6">
-
-        <div id="voiceAlert" class="hidden mb-4 p-3 bg-red-600 text-white rounded-xl shadow-lg flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-microphone text-2xl voice-active text-yellow-300"></i>
-                <div>
-                    <span id="voiceStatusText" class="font-bold text-sm block">マイク準備中...</span>
-                    <span id="voiceSubText" class="text-xs text-red-100">「ピッ」と鳴ったらゆっくりお話しください</span>
-                </div>
-            </div>
-            <button onclick="stopSpeechRecognition()" class="bg-white text-red-600 text-xs font-bold px-3 py-1.5 rounded-lg hover:bg-red-50 transition">停止</button>
-        </div>
-
-        <div class="flex border-b border-slate-300 mb-6 bg-white rounded-t-xl overflow-hidden shadow-sm">
-            <button id="tabActiveBtn" onclick="switchTab('active')" class="flex-1 py-3 font-bold text-center border-b-2 border-blue-600 text-blue-600 bg-blue-50/50 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-list-check"></i> 進行中案件
-                <span id="activeCount" class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
-            </button>
-            <button id="tabCompletedBtn" onclick="switchTab('completed')" class="flex-1 py-3 font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-box-archive"></i> 作業完了フォルダ
-                <span id="completedCount" class="bg-slate-400 text-white text-xs px-2 py-0.5 rounded-full">0</span>
-            </button>
-        </div>
-
-        <section id="inputSection" class="bg-white p-6 rounded-xl shadow-md mb-8 border border-slate-200">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
-                <h2 id="formHeaderTitle" class="font-bold text-slate-700 flex items-center gap-2 text-base">
-                    <i class="fa-solid fa-pen-to-square text-blue-600"></i> 修理受付データの入力
-                </h2>
-                <div class="flex gap-2">
-                    <button id="cancelEditBtn" onclick="cancelEditMode()" class="hidden bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition">編集キャンセル</button>
-                    <button id="globalVoiceBtn" onclick="toggleGlobalVoice()" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-100 flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-microphone"></i> 一括音声入力
-                    </button>
-                </div>
-            </div>
-
-            <form id="repairForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <input type="hidden" id="editingId" value="">
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">受付日 <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="text" id="date" placeholder="例: 10/21" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('date')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+            <section id="inputSection" class="bg-white p-6 rounded-xl shadow-md mb-8 border border-slate-200">
+                <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                    <h2 id="formHeaderTitle" class="font-bold text-slate-700 flex items-center gap-2 text-base">
+                        <i class="fa-solid fa-pen-to-square text-blue-600"></i> 修理受付データの入力
+                    </h2>
+                    <div class="flex gap-2">
+                        <button id="cancelEditBtn" onclick="cancelEditMode()" class="hidden bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-300 transition">編集キャンセル</button>
+                        <button id="globalVoiceBtn" onclick="toggleGlobalVoice()" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-100 flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-microphone"></i> 一括音声入力
+                        </button>
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">お客様名（企業名） <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="text" id="customer" placeholder="○○株式会社" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('customer')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                <form id="repairForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <input type="hidden" id="editingId" value="">
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">受付日 <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="text" id="date" placeholder="例: 10/21" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('date')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">担当者名（個人名）</label>
-                    <div class="relative">
-                        <input type="text" id="contactName" placeholder="比嘉" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('contactName')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">お客様名（企業名） <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="text" id="customer" placeholder="○○株式会社" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('customer')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">電話番号</label>
-                    <div class="relative">
-                        <input type="tel" id="contactPhone" placeholder="090-0000-0000" onblur="autoFormatPhone(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('contactPhone')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">担当者名（個人名）</label>
+                        <div class="relative">
+                            <input type="text" id="contactName" placeholder="比嘉" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('contactName')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">機械名 <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="text" id="machine" placeholder="コンプレッサー A-100" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('machine')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">電話番号</label>
+                        <div class="relative">
+                            <input type="tel" id="contactPhone" placeholder="090-0000-0000" onblur="autoFormatPhone(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('contactPhone')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">作業担当者</label>
-                    <div class="relative">
-                        <input type="text" id="staff" placeholder="佐藤" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('staff')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">機械名 <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="text" id="machine" placeholder="コンプレッサー A-100" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('machine')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">作業予定日 <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <input type="text" id="scheduleDate" placeholder="例: 10/25" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('scheduleDate')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">作業担当者</label>
+                        <div class="relative">
+                            <input type="text" id="staff" placeholder="佐藤" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('staff')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="md:col-span-2 lg:col-span-4">
-                    <label class="block text-xs font-bold text-slate-600 mb-1">作業内容</label>
-                    <div class="relative">
-                        <input type="text" id="details" placeholder="定期点検およびオイル交換作業" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('details')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">作業予定日 <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="text" id="scheduleDate" placeholder="例: 10/25" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('scheduleDate')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="md:col-span-2 lg:col-span-4">
-                    <label class="block text-xs font-bold text-slate-600 mb-1">備考</label>
-                    <div class="relative">
-                        <input type="text" id="notes" placeholder="敷地内裏手の第2工場に設置" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
-                        <button type="button" onclick="startSingleVoice('notes')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    <div class="md:col-span-2 lg:col-span-4">
+                        <label class="block text-xs font-bold text-slate-600 mb-1">作業内容</label>
+                        <div class="relative">
+                            <input type="text" id="details" placeholder="定期点検およびオイル交換作業" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('details')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
                     </div>
+
+                    <div class="md:col-span-2 lg:col-span-4">
+                        <label class="block text-xs font-bold text-slate-600 mb-1">備考</label>
+                        <div class="relative">
+                            <input type="text" id="notes" placeholder="敷地内裏手の第2工場に設置" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                            <button type="button" onclick="startSingleVoice('notes')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-4 mt-2">
+                        <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> 登録する (スプレッドシートへ保存)
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="sectionTitle" class="font-bold text-slate-700 text-base">進行中の修理案件一覧</h3>
+                    <input type="text" id="searchInput" oninput="renderCards()" placeholder="キーワードで検索..." class="p-2 border border-slate-300 rounded-lg text-xs w-48 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                 </div>
-
-                <div class="md:col-span-2 lg:col-span-4 mt-2">
-                    <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-paper-plane"></i> 登録する (スプレッドシートへ保存)
-                    </button>
+                <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                <div id="emptyMessage" class="hidden text-center py-12 bg-white rounded-xl border border-slate-200">
+                    <i class="fa-solid fa-inbox text-4xl text-slate-300 mb-2"></i>
+                    <p class="text-slate-500 text-sm">表示する案件データはありません</p>
                 </div>
-            </form>
-        </section>
+            </section>
 
-        <section>
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="sectionTitle" class="font-bold text-slate-700 text-base">進行中の修理案件一覧</h3>
-                <input type="text" id="searchInput" oninput="renderCards()" placeholder="キーワードで検索..." class="p-2 border border-slate-300 rounded-lg text-xs w-48 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-            </div>
-            <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-            <div id="emptyMessage" class="hidden text-center py-12 bg-white rounded-xl border border-slate-200">
-                <i class="fa-solid fa-inbox text-4xl text-slate-300 mb-2"></i>
-                <p class="text-slate-500 text-sm">表示する案件データはありません</p>
-            </div>
-        </section>
-
-    </main>
+        </main>
+    </div>
 
     <script>
+        // 社内共通アクセスマスワード（お好きな文字列に変更してください）
+        const APP_PASSWORD = '5337';
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbxZ4ZUq7M1adedXh0yX3J8kO1W8doEzaSx4lLcUujAQksCpkDTM2D49QJtSDzCpFlKOaQ/exec';
 
         let repairsData = JSON.parse(localStorage.getItem('repairsData') || '[]');
@@ -175,6 +202,36 @@
         let currentTab = 'active';
         let recognition = null;
         let audioCtx = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('appAuthenticated') === 'true') {
+                showApp();
+            }
+        });
+
+        function checkPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('passwordInput').value;
+            if (input === APP_PASSWORD) {
+                localStorage.setItem('appAuthenticated', 'true');
+                showApp();
+            } else {
+                document.getElementById('authError').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('appAuthenticated');
+            location.reload();
+        }
+
+        function showApp() {
+            document.getElementById('authModal').classList.add('hidden');
+            document.getElementById('appContent').classList.remove('hidden');
+            initDefaultDate();
+            renderCards();
+            loadFromGAS();
+        }
 
         function playBeep(freq = 880, duration = 0.12) {
             try {
@@ -191,12 +248,6 @@
                 osc.stop(audioCtx.currentTime + duration);
             } catch(e){}
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            initDefaultDate();
-            renderCards();
-            loadFromGAS();
-        });
 
         function parseCustomDate(inputStr) {
             if (!inputStr) return '';
