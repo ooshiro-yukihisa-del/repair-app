@@ -74,4 +74,567 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">受付日 <span class="text-red-500">*</span></label>
                     <div class="relative">
-                        <input type="text" id="date" placeholder="例: 10/21" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300
+                        <input type="text" id="date" placeholder="例: 10/21" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('date')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">お客様名（企業名） <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" id="customer" placeholder="○○株式会社" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('customer')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">担当者名（個人名）</label>
+                    <div class="relative">
+                        <input type="text" id="contactName" placeholder="比嘉" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('contactName')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">電話番号</label>
+                    <div class="relative">
+                        <input type="tel" id="contactPhone" placeholder="090-0000-0000" onblur="autoFormatPhone(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('contactPhone')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">機械名 <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" id="machine" placeholder="コンプレッサー A-100" required class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('machine')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">作業担当者</label>
+                    <div class="relative">
+                        <input type="text" id="staff" placeholder="佐藤" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('staff')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 mb-1">作業予定日 <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="text" id="scheduleDate" placeholder="例: 10/25" required onblur="autoFormatDate(this)" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('scheduleDate')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 lg:col-span-4">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">作業内容</label>
+                    <div class="relative">
+                        <input type="text" id="details" placeholder="定期点検およびオイル交換作業" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('details')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 lg:col-span-4">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">備考</label>
+                    <div class="relative">
+                        <input type="text" id="notes" placeholder="敷地内裏手の第2工場に設置" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none">
+                        <button type="button" onclick="startSingleVoice('notes')" class="absolute right-2 top-2.5 text-slate-400 hover:text-red-500 p-1"><i class="fa-solid fa-microphone text-xs"></i></button>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 lg:col-span-4 mt-2">
+                    <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> 登録する (スプレッドシートへ保存)
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="sectionTitle" class="font-bold text-slate-700 text-base">進行中の修理案件一覧</h3>
+                <input type="text" id="searchInput" oninput="renderCards()" placeholder="キーワードで検索..." class="p-2 border border-slate-300 rounded-lg text-xs w-48 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            </div>
+            <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div id="emptyMessage" class="hidden text-center py-12 bg-white rounded-xl border border-slate-200">
+                <i class="fa-solid fa-inbox text-4xl text-slate-300 mb-2"></i>
+                <p class="text-slate-500 text-sm">表示する案件データはありません</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbxZ4ZUq7M1adedXh0yX3J8kO1W8doEzaSx4lLcUujAQksCpkDTM2D49QJtSDzCpFlKOaQ/exec';
+
+        let repairsData = JSON.parse(localStorage.getItem('repairsData') || '[]');
+        let customerMaster = JSON.parse(localStorage.getItem('customerMaster') || '[]');
+        let surnameMaster = JSON.parse(localStorage.getItem('surnameMaster') || '[]');
+        let learnedData = JSON.parse(localStorage.getItem('learnedData') || '{"machines":[],"details":[],"notes":[],"staff":[]}');
+        let currentTab = 'active';
+        let recognition = null;
+        let audioCtx = null;
+
+        function playBeep(freq = 880, duration = 0.12) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initDefaultDate();
+            renderCards();
+            loadFromGAS();
+        });
+
+        function parseCustomDate(inputStr) {
+            if (!inputStr) return '';
+            const cleanStr = inputStr.replace(/年|月/g, '/').replace(/日/g, '').trim();
+            const parts = cleanStr.split(/[\/\-.]/);
+            const currentYear = 2026;
+            if (parts.length === 2) {
+                return `${currentYear}年${parts[0].padStart(2, '0')}月${parts[1].padStart(2, '0')}日`;
+            } else if (parts.length === 3) {
+                let year = parts[0];
+                if (year.length === 2) year = '20' + year;
+                return `${year}年${parts[1].padStart(2, '0')}月${parts[2].padStart(2, '0')}日`;
+            }
+            return inputStr;
+        }
+
+        function autoFormatDate(element) {
+            if (element && element.value && element.id !== 'contactPhone') {
+                element.value = parseCustomDate(element.value);
+            }
+        }
+
+        function autoFormatPhone(element) {
+            if (!element || !element.value) return;
+            let raw = element.value.replace(/[ー−―-]/g, '').replace(/[^0-9]/g, '');
+            if (raw.length === 10 || raw.length === 11) {
+                if (raw.startsWith('090') || raw.startsWith('080') || raw.startsWith('070')) {
+                    element.value = raw.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                } else if (raw.startsWith('098')) {
+                    element.value = raw.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                } else {
+                    element.value = raw.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+                }
+            } else if (raw.length > 0) {
+                element.value = raw;
+            }
+        }
+
+        function initDefaultDate() {
+            const today = new Date();
+            const formattedToday = `${today.getFullYear()}年${String(today.getMonth() + 1).padStart(2, '0')}月${String(today.getDate()).padStart(2, '0')}日`;
+            document.getElementById('date').value = formattedToday;
+        }
+
+        async function loadFromGAS() {
+            const refreshBtn = document.getElementById('refreshBtn');
+            if (refreshBtn) refreshBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 取得中...';
+
+            try {
+                const res = await fetch(GAS_URL);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.repairs) {
+                        repairsData = data.repairs;
+                        localStorage.setItem('repairsData', JSON.stringify(repairsData));
+                    }
+                    if (data.customerMaster) {
+                        customerMaster = data.customerMaster;
+                        localStorage.setItem('customerMaster', JSON.stringify(customerMaster));
+                    }
+                    if (data.surnameMaster) {
+                        surnameMaster = data.surnameMaster;
+                        localStorage.setItem('surnameMaster', JSON.stringify(surnameMaster));
+                    }
+                    if (data.learnedData) {
+                        learnedData = data.learnedData;
+                        localStorage.setItem('learnedData', JSON.stringify(learnedData));
+                    }
+                }
+            } catch (err) {
+                console.log("GAS通信スキップ");
+            } finally {
+                if (refreshBtn) refreshBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> 最新同期';
+                renderCards();
+            }
+        }
+
+        function katakanaToHiragana(src) {
+            return src.replace(/[\u30a1-\u30f6]/g, function(match) {
+                return String.fromCharCode(match.charCodeAt(0) - 0x60);
+            });
+        }
+
+        function convertWithMaster(text, fieldId) {
+            if (!text) return '';
+            let cleaned = text.trim();
+            let hiraClean = katakanaToHiragana(cleaned).toLowerCase();
+
+            if (fieldId === 'contactPhone') {
+                return cleaned.replace(/[^0-9]/g, '');
+            }
+
+            if (fieldId === 'customer') {
+                for (let c of customerMaster) {
+                    let cName = c.name;
+                    let cKana = katakanaToHiragana(c.kana || '').toLowerCase();
+                    if (cKana && (hiraClean.includes(cKana) || cKana.includes(hiraClean))) return cName;
+                    if (cleaned.includes(cName) || cName.includes(cleaned)) return cName;
+                }
+            }
+
+            if (fieldId === 'contactName' || fieldId === 'staff') {
+                for (let s of surnameMaster) {
+                    let sName = s.name;
+                    let sKana = katakanaToHiragana(s.kana || '').toLowerCase();
+                    if (sKana && (hiraClean === sKana || hiraClean.includes(sKana))) return sName;
+                    if (cleaned === sName) return sName;
+                }
+            }
+
+            let learnTargets = [];
+            if (fieldId === 'machine') learnTargets = learnedData.machines || [];
+            if (fieldId === 'details') learnTargets = learnedData.details || [];
+            if (fieldId === 'notes') learnTargets = learnedData.notes || [];
+
+            for (let item of learnTargets) {
+                if (item && (item.includes(cleaned) || cleaned.includes(item))) return item;
+            }
+            return cleaned;
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const editingId = document.getElementById('editingId').value;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 送信中...';
+
+            const recordId = editingId ? editingId : 'REP-' + Date.now();
+            const currentStatus = editingId ? (repairsData.find(i => i.id === editingId)?.status || '進行中') : '進行中';
+
+            const newRecord = {
+                id: recordId,
+                date: parseCustomDate(document.getElementById('date').value),
+                customer: document.getElementById('customer').value,
+                contactName: document.getElementById('contactName').value,
+                contactPhone: document.getElementById('contactPhone').value,
+                machine: document.getElementById('machine').value,
+                staff: document.getElementById('staff').value,
+                scheduleDate: parseCustomDate(document.getElementById('scheduleDate').value),
+                details: document.getElementById('details').value,
+                notes: document.getElementById('notes').value,
+                status: currentStatus
+            };
+
+            if (editingId) {
+                const idx = repairsData.findIndex(i => i.id === editingId);
+                if (idx !== -1) repairsData[idx] = newRecord;
+            } else {
+                repairsData.unshift(newRecord);
+            }
+
+            localStorage.setItem('repairsData', JSON.stringify(repairsData));
+
+            if (newRecord.machine && !learnedData.machines.includes(newRecord.machine)) learnedData.machines.push(newRecord.machine);
+            if (newRecord.details && !learnedData.details.includes(newRecord.details)) learnedData.details.push(newRecord.details);
+            if (newRecord.notes && !learnedData.notes.includes(newRecord.notes)) learnedData.notes.push(newRecord.notes);
+            localStorage.setItem('learnedData', JSON.stringify(learnedData));
+
+            try {
+                await fetch(GAS_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: editingId ? 'update' : 'add', item: newRecord })
+                });
+            } catch (err) { console.error("GAS書き込みエラー:", err); }
+
+            cancelEditMode();
+            submitBtn.disabled = false;
+            renderCards();
+            alert(editingId ? "受付データを更新しました！" : "受付データを登録しました！");
+        }
+
+        function startEdit(id) {
+            const item = repairsData.find(i => i.id === id);
+            if (!item) return;
+
+            document.getElementById('editingId').value = item.id;
+            document.getElementById('date').value = item.date || '';
+            document.getElementById('customer').value = item.customer || '';
+            document.getElementById('contactName').value = item.contactName || '';
+            document.getElementById('contactPhone').value = item.contactPhone || '';
+            document.getElementById('machine').value = item.machine || '';
+            document.getElementById('staff').value = item.staff || '';
+            document.getElementById('scheduleDate').value = item.scheduleDate || '';
+            document.getElementById('details').value = item.details || '';
+            document.getElementById('notes').value = item.notes || '';
+
+            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-orange-500"></i> 修理受付データの編集';
+            document.getElementById('submitBtn').className = "w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2";
+            document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 更新する (データを上書き)';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+
+            document.getElementById('inputSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEditMode() {
+            document.getElementById('repairForm').reset();
+            document.getElementById('editingId').value = '';
+            initDefaultDate();
+
+            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-pen-to-square text-blue-600"></i> 修理受付データの入力';
+            document.getElementById('submitBtn').className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-md transition flex items-center justify-center gap-2";
+            document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-paper-plane"></i> 登録する (スプレッドシートへ保存)';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        async function toggleComplete(id) {
+            const index = repairsData.findIndex(item => item.id === id);
+            if (index !== -1) {
+                const newStatus = repairsData[index].status === '完了' ? '進行中' : '完了';
+                repairsData[index].status = newStatus;
+                localStorage.setItem('repairsData', JSON.stringify(repairsData));
+                renderCards();
+
+                try {
+                    await fetch(GAS_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify({ action: 'updateStatus', item: { id: id, status: newStatus } })
+                    });
+                } catch (err) { console.error("GASステータス更新エラー:", err); }
+            }
+        }
+
+        function isOverdue(scheduleDateStr, status) {
+            if (status === '完了' || !scheduleDateStr) return false;
+            const match = scheduleDateStr.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+            if (!match) return false;
+            const schedDate = new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return schedDate < today;
+        }
+
+        function renderCards() {
+            const container = document.getElementById('cardsContainer');
+            const emptyMessage = document.getElementById('emptyMessage');
+            const searchKeyword = document.getElementById('searchInput').value.toLowerCase();
+            container.innerHTML = '';
+
+            const filtered = repairsData.filter(item => {
+                const matchTab = (currentTab === 'active') ? (item.status !== '完了') : (item.status === '完了');
+                const matchSearch = !searchKeyword || 
+                    item.customer.toLowerCase().includes(searchKeyword) ||
+                    item.machine.toLowerCase().includes(searchKeyword) ||
+                    item.staff.toLowerCase().includes(searchKeyword);
+                return matchTab && matchSearch;
+            });
+
+            document.getElementById('activeCount').innerText = repairsData.filter(i => i.status !== '完了').length;
+            document.getElementById('completedCount').innerText = repairsData.filter(i => i.status === '完了').length;
+
+            if (filtered.length === 0) {
+                emptyMessage.classList.remove('hidden');
+            } else {
+                emptyMessage.classList.add('hidden');
+            }
+
+            filtered.forEach(item => {
+                const overdue = isOverdue(item.scheduleDate, item.status);
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl shadow-sm border border-slate-200 p-5 relative flex flex-col justify-between transition hover:shadow-md ${overdue ? 'overdue-card' : ''}`;
+                card.innerHTML = `
+                    <div>
+                        ${overdue ? `<div class="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-flex items-center gap-1 shadow-sm"><i class="fa-solid fa-triangle-exclamation"></i> 作業予定日を超過しています</div>` : ''}
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">${item.id}</span>
+                            <span class="text-xs text-slate-500"><i class="fa-regular fa-calendar"></i> 受付: ${item.date}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-base mb-1">${item.customer}</h4>
+                        ${(item.contactName || item.contactPhone) ? `<p class="text-xs text-slate-500 mb-3 flex items-center gap-2"><i class="fa-solid fa-user text-slate-400"></i> ${item.contactName || '担当未記入'} ${item.contactPhone ? `(${item.contactPhone})` : ''}</p>` : ''}
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 mb-3 space-y-1 text-xs">
+                            <p><strong class="text-slate-600">機械名:</strong> <span class="font-bold text-slate-800">${item.machine}</span></p>
+                            <p><strong class="text-slate-600">作業担当:</strong> ${item.staff || '未定'}</p>
+                            <p><strong class="text-slate-600">予定日:</strong> <span class="${overdue ? 'text-red-600 font-bold' : 'text-slate-700'}">${item.scheduleDate}</span></p>
+                        </div>
+                        ${item.details ? `<div class="text-xs mb-3"><span class="text-slate-500 font-bold block">作業内容:</span><p class="text-slate-700 bg-blue-50/50 p-2 rounded border border-blue-100 mt-1">${item.details}</p></div>` : ''}
+                        ${item.notes ? `<p class="text-xs text-slate-400 mb-3 italic">備考: ${item.notes}</p>` : ''}
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                        <button onclick="startEdit('${item.id}')" class="bg-amber-500 text-white hover:bg-amber-600 text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-pen"></i> 編集
+                        </button>
+                        <button onclick="toggleComplete('${item.id}')" class="${item.status === '完了' ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-green-600 text-white hover:bg-green-700'} text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid ${item.status === '完了' ? 'fa-rotate-left' : 'fa-check'}"></i> ${item.status === '完了' ? '進行中に戻す' : '作業完了'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const activeBtn = document.getElementById('tabActiveBtn');
+            const completedBtn = document.getElementById('tabCompletedBtn');
+            const title = document.getElementById('sectionTitle');
+            if (tab === 'active') {
+                activeBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-blue-600 text-blue-600 bg-blue-50/50 flex items-center justify-center gap-2";
+                completedBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center justify-center gap-2";
+                title.innerText = "進行中の修理案件一覧";
+            } else {
+                completedBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-green-600 text-green-600 bg-green-50/50 flex items-center justify-center gap-2";
+                activeBtn.className = "flex-1 py-3 font-bold text-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 flex items-center justify-center gap-2";
+                title.innerText = "作業完了フォルダ (履歴一覧)";
+            }
+            renderCards();
+        }
+
+        function initSpeech() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) return null;
+            const rec = new SpeechRecognition();
+            rec.lang = 'ja-JP';
+            rec.interimResults = true;
+            rec.continuous = true;
+            rec.maxAlternatives = 1;
+            return rec;
+        }
+
+        function stopSpeechRecognition() {
+            if (recognition) {
+                try { recognition.stop(); } catch(e){}
+                recognition = null;
+            }
+            document.getElementById('voiceAlert').classList.add('hidden');
+        }
+
+        function startSingleVoice(fieldId) {
+            stopSpeechRecognition();
+
+            recognition = initSpeech();
+            if (!recognition) return;
+
+            const alertBox = document.getElementById('voiceAlert');
+            const statusText = document.getElementById('voiceStatusText');
+            const subText = document.getElementById('voiceSubText');
+            alertBox.classList.remove('hidden');
+            statusText.innerText = `準備中...`;
+            subText.innerText = "「ピッ」と鳴ったらゆっくりお話しください";
+
+            recognition.onstart = () => {
+                playBeep(880, 0.12);
+                statusText.innerText = `聞き取り中...`;
+                subText.innerText = "話し終わったら「停止」を押すか、少しそのままお待ちください";
+            };
+
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+                const field = document.getElementById(fieldId);
+                if (field && transcript.trim()) {
+                    let converted = convertWithMaster(transcript, fieldId);
+                    field.value = converted;
+                    if (fieldId === 'date' || fieldId === 'scheduleDate') autoFormatDate(field);
+                    if (fieldId === 'contactPhone') autoFormatPhone(field);
+                }
+            };
+
+            recognition.onerror = stopSpeechRecognition;
+            recognition.onend = () => {
+                playBeep(440, 0.1);
+                stopSpeechRecognition();
+            };
+            recognition.start();
+        }
+
+        function toggleGlobalVoice() {
+            stopSpeechRecognition();
+
+            recognition = initSpeech();
+            if (!recognition) return;
+
+            const alertBox = document.getElementById('voiceAlert');
+            const statusText = document.getElementById('voiceStatusText');
+            const subText = document.getElementById('voiceSubText');
+            alertBox.classList.remove('hidden');
+            statusText.innerText = "一括音声入力 準備中...";
+            subText.innerText = "「ピッ」と鳴ったら「お客様名 ○○ 担当者 比嘉」のように連続でお話しください";
+
+            recognition.onstart = () => {
+                playBeep(880, 0.12);
+                statusText.innerText = "一括音声入力中...";
+            };
+
+            recognition.onresult = (event) => {
+                let speechResult = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    speechResult += event.results[i][0].transcript;
+                }
+                parseAndFillGlobalVoice(speechResult);
+            };
+
+            recognition.onerror = stopSpeechRecognition;
+            recognition.onend = () => {
+                playBeep(440, 0.1);
+                stopSpeechRecognition();
+            };
+            recognition.start();
+        }
+
+        function parseAndFillGlobalVoice(text) {
+            const keywords = [
+                { key: '受付日', id: 'date' },
+                { key: 'お客様名', id: 'customer' },
+                { key: 'お客様', id: 'customer' },
+                { key: '担当者', id: 'contactName' },
+                { key: '電話番号', id: 'contactPhone' },
+                { key: '機械名', id: 'machine' },
+                { key: '作業担当', id: 'staff' },
+                { key: '作業予定日', id: 'scheduleDate' },
+                { key: '予定日', id: 'scheduleDate' },
+                { key: '作業内容', id: 'details' },
+                { key: '備考', id: 'notes' }
+            ];
+
+            keywords.forEach(kw => {
+                if (text.includes(kw.key)) {
+                    const sub = text.split(kw.key)[1];
+                    if (sub) {
+                        let value = sub.split(/お客様|担当者|電話番号|機械名|作業担当|予定日|作業内容|備考/)[0].trim();
+                        value = value.replace(/^は|^の|^::|^:|\s+/g, '');
+                        if (value) {
+                            const field = document.getElementById(kw.id);
+                            if (field) {
+                                let converted = convertWithMaster(value, kw.id);
+                                field.value = converted;
+                                if (kw.id === 'date' || kw.id === 'scheduleDate') autoFormatDate(field);
+                                if (kw.id === 'contactPhone') autoFormatPhone(field);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
